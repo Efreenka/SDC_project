@@ -1,0 +1,51 @@
+.fixed-form {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.hidden-form {
+    background-color: #162e45;
+    color: white;
+    position: relative;
+    width: 500px;
+    margin: 7px auto;
+    min-height: 690px;
+}
+
+.form-h2{
+    margin: 5px;
+    text-align: center;
+}
+
+form input, label {
+    display: block;
+    margin: 7px auto;
+    text-align: center;
+}
+
+.item {
+    font-size: 17px;
+    margin: 4px 0;
+    padding: 3px 0;
+}
+
+.hidden-form-submit {
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+}
+
+.exit-button {
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 2px;
+    position: absolute;
+    right: 10px;
+    top: 1px;
+}
