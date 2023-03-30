@@ -16,37 +16,57 @@ const App = () => {
       header: true,
       download: true,
       delimeter: ";",
-      skipEmptyLines: true,
+      skipEmptyLines: true, 
       complete: (result) => {
         setCSVData(result.data)
-        setCSVHeaders(result.meta.fields.map((oneHeader) => {
-          return {
-            Header: oneHeader,
-            accessor: oneHeader,
+        setCSVHeaders([{
+          Header: "UID",
+          accessor: "uid"
+        },
+        {
+          Header: "First Name",
+          accessor: "first name"
+        },
+        {
+          Header: "Last Name",
+          accessor: "last name"
+        },
+        {
+          Header: "Username",
+          accessor: "username"
+        },
+        {
+          Header: "Email",
+          accessor: "email"
+        },
+        {
+          Header: "Phone Number",
+          accessor: "phone number"
+        },
+        {
+          Header: "Access Allowed",
+          accessor: "access allowed",
+          Cell: ({ cell: { value } }) => < input type={"checkbox"} checked = {value === "true"} disabled/>
+        },
+        {
+          Header: "Hired Since",
+          accessor: "hired since",
+          Cell: ({ cell: { value } }) => {
+            const date1 = Date.parse(value)
+            const date = new Date(date1).getDate()
+            const month = new Date(date1).getMonth()
+            const year = new Date(date1).getFullYear()
+            return value && `${date}. ${month}. ${year}`
           }
-        }))
+        },
+        ])
       }
     })
   }
-  
+
   useEffect( () => {
     getCSV()
   }, [])
-
-  useEffect(() => {
-    console.log(CSVData)
-    const savedData = Papa.unparse(CSVData, {
-      quotes: false,
-	    quoteChar: '"',
-      escapeChar: '"',
-      delimiter: ";",
-      header: true,
-      newline: "\r\n",
-      skipEmptyLines: false, 
-      columns: null
-    })
-    console.log(savedData)
-  }, [CSVData]);
 
   return ( CSVData &&
     <div>

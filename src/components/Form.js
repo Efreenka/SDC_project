@@ -26,6 +26,11 @@ const Form = (props) => {
         })
     }
 
+    console.log (props.data)
+    // Form.prototype = {
+    
+    // }
+
     const formSubmit = (event) => {
         event.preventDefault()
 
@@ -66,7 +71,7 @@ const Form = (props) => {
     return props.showForm && <div className="fixed-form" ref={props.refForm}>
         
         <form className="hidden-form" onSubmit={formSubmit}>
-            <h2 className="form-h2">Přidat nový záznam</h2>
+            <h2 className="form-h2">Add new entry</h2>
             <span className="exit-button" onClick={props.hideForm}>X</span>
             <div className="item">
                 <label htmlFor="firstName">first name: </label>
@@ -139,7 +144,7 @@ const Form = (props) => {
                 />
             </div>
             <div>
-                <input className="hidden-form-submit" type="submit"/>
+                <input className="hidden-form-submit" type="submit" value="Send"/>
             </div>
         </form>
     </div>

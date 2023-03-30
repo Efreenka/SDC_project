@@ -1,8 +1,9 @@
 import "./AddButton.css"
 
 const AddButton = (props) => {
+
     return (
-        <button className="add-button" onClick={props.setShowForm}>Přidat</button>
+        <button className="add-button" onClick={props.setShowForm}>Add</button>
     )
 }
 
