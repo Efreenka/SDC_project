@@ -1,5 +1,6 @@
 import "./Form.css"
 import { useState } from "react"
+import { toast } from 'react-toastify'
 
 const Form = (props) => {
     const [formData, setFormData] = useState({
@@ -26,11 +27,6 @@ const Form = (props) => {
         })
     }
 
-    console.log (props.data)
-    // Form.prototype = {
-    
-    // }
-
     const formSubmit = (event) => {
         event.preventDefault()
 
@@ -38,34 +34,49 @@ const Form = (props) => {
            let lastID = props.data[props.data.length - 1].uid
            return parseInt(lastID)
         }
-        
-        const item = {
-            "uid": getLastID() + 1,
-            "first name": formData.firstName,
-            "last name": formData.lastName,
-            "username": formData.username,
-            "email": formData.email,
-            "phone number": formData.phoneNumber,
-            "access allowed": formData.accessAllowed.toString(),
-            "hired since": formData.hiredSince ? `${formData.hiredSince}:00Z` : "" 
-        }
 
-        props.setData([
-            ...props.data,
-            item
-        ])
-
-        setFormData({
-            firstName: "",
-            lastName: "",
-            username: "",
-            email: "",
-            phoneNumber: "",
-            accessAllowed: false,
-            hiredSince: ""
+        const usernames = props.data.map( (row) => {
+            return row.username
         })
 
-        props.hideForm()
+        if (formData.phoneNumber && !/^\d+$/.test(formData.phoneNumber)) { 
+            toast("invalid phone number") 
+        } else if (formData.email && !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(formData.email)) {
+            toast("invalid email")
+            // https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
+        } else if (formData.username && usernames.indexOf(formData.username) > -1) {
+            toast("invalid username")
+        } else {
+            const item = {
+                "uid": getLastID() + 1,
+                "first name": formData.firstName,
+                "last name": formData.lastName,
+                "username": formData.username,
+                "email": formData.email,
+                "phone number": formData.phoneNumber,
+                "access allowed": formData.accessAllowed.toString(),
+                "hired since": formData.hiredSince ? `${formData.hiredSince}:00Z` : "" 
+            }
+    
+            props.setData([
+                ...props.data,
+                item
+            ])
+
+            setFormData({
+                firstName: "",
+                lastName: "",
+                username: "",
+                email: "",
+                phoneNumber: "",
+                accessAllowed: false,
+                hiredSince: ""
+            })
+            
+            props.hideForm()
+
+            toast.success("Saved!")
+        }
     }
 
     return props.showForm && <div className="fixed-form" ref={props.refForm}>

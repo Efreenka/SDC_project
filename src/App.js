@@ -4,6 +4,8 @@ import Form from './components/Form'
 import AddButton from './components/AddButton'
 import useShowForm from "./hooks"
 import Papa from 'papaparse'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
   const [CSVData, setCSVData] = useState([])
@@ -70,6 +72,7 @@ const App = () => {
 
   return ( CSVData &&
     <div>
+      <ToastContainer />
       <AddButton setShowForm={() => setShowForm(true)}/>
       <Form data={CSVData} setData={setCSVData} refForm={ref} showForm={showForm} hideForm={() => setShowForm(false)} />
       <Table columns={CSVHeaders} data={CSVData} />
